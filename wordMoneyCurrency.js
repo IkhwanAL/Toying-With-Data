@@ -92,7 +92,7 @@ function readPuluhan(arr = [], value){
         if(arr[i] == 1 && arr[i + 1] == 1){
             word += satuan[11] + ' ';
         }else if(arr[1] == 1){
-            word += readSatuan([], arr[i]) + 'Belas ';
+            word += readSatuan([], arr[i + 1]) + 'Belas ';
         }else{
             word += readSatuan([], arr[i]) + 'Puluh '
             word += readSatuan([], arr[i + 1]);
