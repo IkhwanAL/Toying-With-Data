@@ -36,7 +36,6 @@ let startIndexPosition = 0;
 const keysNumber = Object.keys(satuan);
 
 function readRatusan(arr){
-
     if(typeof arr === 'undefined' || typeof arr !== 'object'){
         return
     }
@@ -44,14 +43,15 @@ function readRatusan(arr){
     if(checkFullZeroValue){
         return ''
     }
+
     let word = '';
     if(arr.length - 1 < 2){
         word = readPuluhan(arr);
         return word
     }
     
-    
     if(arr[0] == 0){
+		newArr = [arr[1], arr[2]]
         word = readPuluhan(arr);
         return word;
     }
@@ -68,47 +68,73 @@ function readRatusan(arr){
 }
 /**
  * 
- * Puluhan Must Cross Check 
+ * Puluhan, Must Cross Check 
  * it can be Complicated When reach 
  * eleven to nineteen number And Check For Dozens Number
  */
 function readPuluhan(arr = [], value){
     if(arr.length - 1 < 1){
-        console.log('im in')
         let word = readSatuan(arr)
         return word;
     }
-    if(arr[1] == 0){
+    if(arr[1] == 0){	
         let word = readSatuan(arr);
         return word;
     }
-    // console.log(arr)
+    
     let word = '';
-    for(let i = 0; i < 1; i++){
-        // console.log(i)
-        if(arr[i] == 1 && arr[i + 1] == 0){
-            word += satuan[10] + ' ';
-        }
-        if(arr[i] == 1 && arr[i + 1] == 1){
-            word += satuan[11] + ' ';
-        }else if(arr[1] == 1){
-            word += readSatuan([], arr[i + 1]) + 'Belas ';
-        }else{
-            word += readSatuan([], arr[i]) + 'Puluh '
-            word += readSatuan([], arr[i + 1]);
-        }   
-    }
-    // if(arr[1] == 1 && arr[2] == 0){
-    //     word += satuan[10] + ' ';
-    // }
-    // if(arr[1] == 1 && arr[2] == 1){
-    //     word += satuan[11];
-    // }else if(arr[1] == 1){
-    //     word += readSatuan([], arr[2]) + 'Belas';
-    // }else{
-    //     word += readSatuan([], arr[1]) + 'Puluh '
-    //     word += readSatuan([], arr[2]);
-    // }   
+	let i= 0;
+	if(arr.length == 3){
+		while(i < 2){
+			if(arr[i] == 0){
+				i++;
+			}else
+			if(arr[i] == 1 && arr[i + 1] == 0){
+				word += satuan[10] + ' ';
+				i++;
+			}else
+			if(arr[i] == 1 && arr[i + 1] == 1){
+				word += satuan[11] + ' ';
+				i++;
+			}else
+			if(arr[i] == 1){
+				word += readSatuan([], arr[i+1]) + 'Belas ';
+				i++;
+			}else if(arr[i] != 0 && arr[i+1] == 0){
+				word += readSatuan([], arr[i]) + 'Puluh ';
+				i++;
+			}else{
+				word += readSatuan([], arr[i]) + 'Puluh '
+				word += readSatuan([], arr[i + 1]);
+				i++;
+			}
+			
+		}  
+	}
+	if(arr.length == 2){
+		while (i < 1){
+			if(arr[i] == 1 && arr[i + 1] == 0){
+				word += satuan[10] + ' ';
+				i++;
+			}else
+			if(arr[i] == 1 && arr[i + 1] == 1){
+				word += satuan[11] + ' ';
+				i++;
+			}else
+			if(arr[i] == 1){
+				word += readSatuan([], arr[i+1]) + 'Belas ';
+				i++;
+			}else if(arr[i] != 0 && arr[i+1] == 0){
+				word += readSatuan([], arr[i]) + 'Puluh ';
+				i++;
+			}else{
+				word += readSatuan([], arr[i]) + 'Puluh '
+				word += readSatuan([], arr[i + 1]);
+				i++;
+			}
+		}
+	}
+	
     return word;
 }
 
